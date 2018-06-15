@@ -7,9 +7,9 @@ using ContossoUniv.Models;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
-namespace ContossoUniv.ContossoUnivDAL
+namespace ContossoUniv.DAL
 {
-    public class SchoolContext : DbContext
+    public class SchoolContext : DbContext  
     {
         public SchoolContext() : base("SchoolContext")
         {
