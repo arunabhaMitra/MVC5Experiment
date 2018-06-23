@@ -26,8 +26,10 @@ namespace ContossoUniv.Controllers
         public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
+            /* Part for Sorting : Begin */
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+            /* Part for Sorting : End */
 
             if (searchString != null)
             {
@@ -40,13 +42,20 @@ namespace ContossoUniv.Controllers
 
             ViewBag.CurrentFilter = searchString;
 
+            /* Part for Sorting : Begin */
             var students = from s in db.Students
                            select s;
+            /* Part for Sorting : End */
+
+            /* Part for Search Box : Begin */
             if (!String.IsNullOrEmpty(searchString))
             {
                 students = students.Where(s => s.LastName.Contains(searchString)
                                        || s.FirstMidName.Contains(searchString));
             }
+            /* Part for Search Box : End */
+
+            /* Part for Sorting : Begin */
             switch (sortOrder)
             {
                 case "name_desc":
@@ -62,8 +71,9 @@ namespace ContossoUniv.Controllers
                     students = students.OrderBy(s => s.LastName);
                     break;
             }
+            /* Part for Sorting : End */
 
-            int pageSize = 3;
+            int pageSize = 5;
             int pageNumber = (page ?? 1);
             return View(students.ToPagedList(pageNumber, pageSize));
         }
